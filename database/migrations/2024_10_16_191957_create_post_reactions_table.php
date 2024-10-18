@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('post_reactions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
+            $table->string('type'); // like, dislike etc
+            $table->foreignIdFor(User::class);
+            $table->timestamp('created_at')->nullable();
         });
     }
 
